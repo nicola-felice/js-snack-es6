@@ -77,7 +77,38 @@ const listaFalliSubiti = [];
 for ( let i = 0; i < listaSquadre.length; i++ ) {
 
     let {nome, falliSubiti} = listaSquadre[i];
-    listaFalliSubiti.push( {nome, falliSubiti} )
+    listaFalliSubiti.push( {nome, falliSubiti} );
 }
 
 console.log( `La lista dei falli subiti dalle squadre è:`, listaFalliSubiti );
+
+
+
+// stampa classifica squadre
+let classifica = [];
+for ( let i = 0; i < listaSquadre.length; i++ ) {
+
+    let squadra = ( [listaSquadre[i].nome, listaSquadre[i].puntiFatti] );
+
+    // se classifica è vuota aggiungi il primo elemento
+    if ( classifica.length == 0 ) {
+        classifica.push(squadra);
+
+    } else {
+        // metti l'elemento in classifica quando trovi un punteggio minore a quello della squadra [i]
+        for ( let e = 0; e < classifica.length; e++ ) {
+            if ( squadra[1] >= classifica[e][1] ) {
+                classifica.splice( e, 0, squadra );
+                break;
+            }
+        }   
+
+        // se non ci sono punteggi minori aggiungi la squadra [i] in fondo alla classifica
+        if ( classifica[i] === undefined ) {
+            e = classifica.length;
+            classifica.push(squadra);
+        }      
+    }
+}
+
+console.log( `la classifica delle squadre è:`, classifica );
