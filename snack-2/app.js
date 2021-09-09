@@ -105,7 +105,6 @@ for ( let i = 0; i < listaSquadre.length; i++ ) {
 
         // se non ci sono punteggi minori aggiungi la squadra [i] in fondo alla classifica
         if ( classifica[i] === undefined ) {
-            e = classifica.length;
             classifica.push(squadra);
         }      
     }
