@@ -111,3 +111,34 @@ for ( let i = 0; i < listaSquadre.length; i++ ) {
 }
 
 console.log( `la classifica delle squadre è:`, classifica );
+
+
+// stampo a schermo classifica
+for ( let i = 0; i < classifica.length; i++ ) {
+
+    document.querySelector("#classifica").innerHTML += `
+        <tr>
+            <td>
+                <div class="nomeSquadra">${classifica[i][0]}</div>
+            </td>
+            <td>
+                <div class="punteggio">${classifica[i][1]}</div>
+            </td>
+        </tr>
+    `;
+}
+
+// stampo a schermo falli subiti 
+for ( let i = 0; i < listaFalliSubiti.length; i++ ) {
+
+    document.querySelector("#falliSubiti").innerHTML += `
+        <tr>
+            <td>
+                <div class="nomeSquadra">${listaFalliSubiti[i].nome}</div>
+            </td>
+            <td>
+                <div class="punteggio">${listaFalliSubiti[i].falliSubiti}</div>
+            </td>
+        </tr>
+    `;
+}
