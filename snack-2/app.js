@@ -5,6 +5,39 @@
 // Punti fatti e falli subiti.
 // Infine usando la destrutturazione creiamo un nuovo array i cui elementi contengono solo nomi e falli subiti e stampiamo tutto in console.
 
+function creaClassifica(array, id, parametroConsiderato) {
+
+    let classifica = [];
+
+    for ( let i = 0; i < array.length; i++ ) {
+
+        let squadra = ( [array[i][id], array[i][parametroConsiderato]] );             
+
+
+        // se classifica è vuota aggiungi il primo elemento
+        if ( classifica.length == 0 ) {
+            classifica.push(squadra);
+
+        } else {
+            // metti l'elemento in classifica quando trovi un punteggio minore a quello della squadra [i]
+            for ( let e = 0; e < classifica.length; e++ ) {
+                if ( squadra[1] >= classifica[e][1] ) {
+                    classifica.splice( e, 0, squadra );
+                    break;
+                }
+            }   
+
+            // se non ci sono punteggi minori aggiungi la squadra [i] in fondo alla classifica
+            if ( classifica[i] === undefined ) {
+                classifica.push(squadra);
+            }      
+        }
+    }
+
+    return classifica;
+}
+
+
 function getRandomArbitrary(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
@@ -71,7 +104,7 @@ for ( let i = 0; i < listaSquadre.length; i++ ) {
     listaSquadre[i].falliSubiti = getRandomArbitrary(1, 100);
 }
 
-
+/*
 const listaFalliSubiti = [];
 
 for ( let i = 0; i < listaSquadre.length; i++ ) {
@@ -80,64 +113,42 @@ for ( let i = 0; i < listaSquadre.length; i++ ) {
     listaFalliSubiti.push( {nome, falliSubiti} );
 }
 
-console.log( `La lista dei falli subiti dalle squadre è:`, listaFalliSubiti );
+console.log(`i falli subiti dalle squadre sono:`, listaFalliSubiti)
+*/
 
 
-
-// stampa classifica squadre
-let classifica = [];
-for ( let i = 0; i < listaSquadre.length; i++ ) {
-
-    let squadra = ( [listaSquadre[i].nome, listaSquadre[i].puntiFatti] );
-
-    // se classifica è vuota aggiungi il primo elemento
-    if ( classifica.length == 0 ) {
-        classifica.push(squadra);
-
-    } else {
-        // metti l'elemento in classifica quando trovi un punteggio minore a quello della squadra [i]
-        for ( let e = 0; e < classifica.length; e++ ) {
-            if ( squadra[1] >= classifica[e][1] ) {
-                classifica.splice( e, 0, squadra );
-                break;
-            }
-        }   
-
-        // se non ci sono punteggi minori aggiungi la squadra [i] in fondo alla classifica
-        if ( classifica[i] === undefined ) {
-            classifica.push(squadra);
-        }      
-    }
-}
-
-console.log( `la classifica delle squadre è:`, classifica );
-
+// creo classifica squadre
+let classificaSquadre = creaClassifica(listaSquadre, "nome", "puntiFatti");
 
 // stampo a schermo classifica
-for ( let i = 0; i < classifica.length; i++ ) {
+for ( let i = 0; i < classificaSquadre.length; i++ ) {
 
     document.querySelector("#classifica").innerHTML += `
         <tr>
             <td>
-                <div class="nomeSquadra">${classifica[i][0]}</div>
+                <div class="nomeSquadra">${classificaSquadre[i][0]}</div>
             </td>
             <td>
-                <div class="punteggio">${classifica[i][1]}</div>
+                <div class="punteggio">${classificaSquadre[i][1]}</div>
             </td>
         </tr>
     `;
 }
 
+
+// classifico a seconda di chi ha subito più falli
+let classificaFalliSubiti = creaClassifica(listaSquadre, "nome", "falliSubiti");
+
 // stampo a schermo falli subiti 
-for ( let i = 0; i < listaFalliSubiti.length; i++ ) {
+for ( let i = 0; i < classificaFalliSubiti.length; i++ ) {
 
     document.querySelector("#falliSubiti").innerHTML += `
         <tr>
             <td>
-                <div class="nomeSquadra">${listaFalliSubiti[i].nome}</div>
+                <div class="nomeSquadra">${classificaFalliSubiti[i][0]}</div>
             </td>
             <td>
-                <div class="punteggio">${listaFalliSubiti[i].falliSubiti}</div>
+                <div class="punteggio">${classificaFalliSubiti[i][1]}</div>
             </td>
         </tr>
     `;
